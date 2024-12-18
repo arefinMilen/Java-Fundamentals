@@ -1,0 +1,122 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Book {
+    private String title;
+    private String author;
+    private boolean isBorrowed;
+
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+        this.isBorrowed = false;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isBorrowed() {
+        return isBorrowed;
+    }
+
+    public void setBorrowed(boolean borrowed) {
+        isBorrowed = borrowed;
+    }
+}
+
+class Library {
+    private List<Book> books;
+
+    public Library() {
+        this.books = new ArrayList<>();
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void removeBook(Book book) {
+        books.remove(book);
+    }
+
+    public List<Book> getAllBooks() {
+        return books;
+    }
+
+    public List<Book> searchBooks(String keyword) {
+        List<Book> searchResults = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getTitle().contains(keyword) || book.getAuthor().contains(keyword)) {
+                searchResults.add(book);
+            }
+        }
+        return searchResults;
+    }
+
+    public List<Book> getBorrowedBooks() {
+        List<Book> borrowedBooks = new ArrayList<>();
+        for (Book book : books) {
+            if (book.isBorrowed()) {
+                borrowedBooks.add(book);
+            }
+        }
+        return borrowedBooks;
+    }
+}
+
+public class LibraryManagementSystem {
+    private static Scanner scanner = new Scanner(System.in);
+    private static Library library = new Library();
+
+    public static void main(String[] args) {
+        showMenu();
+    }
+
+    private static void showMenu() {
+        System.out.println("Welcome to the Library Management System!");
+        int choice;
+        do {
+            System.out.println("\nPlease select an option:");
+            System.out.println("1. Add a book");
+            System.out.println("2. Remove a book");
+            System.out.println("3. Display all books");
+            System.out.println("4. Search for a book");
+            System.out.println("5. Borrow a book");
+            System.out.println("6. Return a book");
+            System.out.println("7. Display borrowed books");
+            System.out.println("8. Quit");
+
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+
+            switch (choice) {
+                case 1:
+                    addBook();
+                    break;
+                case 2:
+                    removeBook();
+                    break;
+                case 3:
+                    displayAllBooks();
+                    break;
+                case 4:
+                    searchBooks();
+                    break;
+                case 5:
+                    borrowBook();
+                    break;
+                case 6:
+                    returnBook();
+                    break;
+                case 7:
+                    displayBorrowedBooks();
+                    break;
+                case 8:
+                    System.out.println("Thank you for using the Library Management System!");
+                    break
